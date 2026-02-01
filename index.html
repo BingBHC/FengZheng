@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>我的视频网站</title>
+    <style>
+        body {
+            text-align: center; /* 让内容居中 */
+            font-family: sans-serif;
+            padding: 20px;
+        }
+        video {
+            max-width: 90%; /* 视频自适应宽度 */
+            height: auto;
+            border-radius: 8px; /* 给视频加一点圆角 */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* 加一个柔和的阴影 */
+        }
+    </style>
+</head>
+<body>
+    <h1>我的第一个GitHub Pages网站</h1>
+    <p>这个视频会自动循环播放。</p>
+
+    <!-- 视频播放器 -->
+    <video controls autoplay loop muted playsinline>
+        <source src="VFX_A.mp4" type="video/mp4">
+        您的浏览器不支持HTML5视频标签。
+    </video>
+
+    <p>你可以使用播放器控件进行暂停、调节音量等操作。</p>
+</body>
+</html>
