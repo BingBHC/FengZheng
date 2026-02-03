@@ -7,18 +7,25 @@
             text-align: center; /* 让内容居中 */
             font-family: sans-serif;
             padding: 20px;
+            max-width: 1440px; /* 与新增组件宽度一致 */
+            margin: 0 auto; /* 页面整体居中 */
         }
         video {
             max-width: 90%; /* 视频自适应宽度 */
             height: auto;
             border-radius: 8px; /* 给视频加一点圆角 */
             box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* 加一个柔和的阴影 */
+            margin-bottom: 40px; /* 为下方组件增加间距 */
+        }
+        .unicorn-container {
+            margin-top: 40px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <h1>联系邮箱:2235510037@qq.com</h1>
-    <p>个人作品</p>
+    <p>作品</p>
 
     <!-- 视频播放器 -->
     <video controls autoplay loop muted playsinline>
@@ -27,5 +34,35 @@
     </video>
 
     <p>谢谢观看</p>
+    
+    <!-- 新增的UnicornStudio项目组件 -->
+    <div class="unicorn-container">
+        <div data-us-project="s6e5OXdHxgCyHflZNsF2" style="width:1440px; height: 900px;"></div>
+    </div>
+
+    <script type="text/javascript">
+        !function(){
+            var u=window.UnicornStudio;
+            if(u&&u.init){
+                if(document.readyState==="loading"){
+                    document.addEventListener("DOMContentLoaded",function(){u.init()})
+                }else{
+                    u.init()
+                }
+            }else{
+                window.UnicornStudio={isInitialized:!1};
+                var i=document.createElement("script");
+                i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.0.4/dist/unicornStudio.umd.js";
+                i.onload=function(){
+                    if(document.readyState==="loading"){
+                        document.addEventListener("DOMContentLoaded",function(){UnicornStudio.init()})
+                    }else{
+                        UnicornStudio.init()
+                    }
+                };
+                (document.head||document.body).appendChild(i)
+            }
+        }();
+    </script>
 </body>
 </html>
