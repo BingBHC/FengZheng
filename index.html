@@ -10,7 +10,7 @@
             height: 100%;
             overflow-x: hidden;
             font-family: sans-serif;
-            background-color: #000; /* 纯黑色底色 */
+            background-color: #000;
         }
         
         #background-canvas {
@@ -32,12 +32,12 @@
         }
         
         h1 {
-            color: #e8f4ff; /* 更亮的文字颜色提高对比度 */
+            color: #ffffff;
             font-size: 2.5em;
-            margin-bottom: 10px; /* 减少与下方段落的间距 */
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
-            background-color: rgba(0, 10, 30, 0.6); /* 深蓝色半透明背景 */
-            display: block; /* 修正：确保独占一行 */
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(100, 150, 255, 0.7);
+            background-color: rgba(0, 20, 40, 0.6);
+            display: block;
             padding: 15px 30px;
             border-radius: 10px;
             margin-left: auto;
@@ -46,13 +46,13 @@
         }
         
         .subtitle {
-            color: #d0e5ff;
+            color: #e6f0ff;
             font-size: 1.4em;
-            margin-top: 0; /* 移除顶部边距 */
+            margin-top: 0;
             margin-bottom: 30px;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
-            background-color: rgba(0, 15, 40, 0.5);
-            display: block; /* 修正：确保独占一行 */
+            text-shadow: 0 0 8px rgba(80, 140, 255, 0.6);
+            background-color: rgba(0, 25, 50, 0.5);
+            display: block;
             padding: 12px 25px;
             border-radius: 8px;
             margin-left: auto;
@@ -61,21 +61,21 @@
         }
         
         video {
-            max-width: 80%; /* 增大至页面宽度的80% */
+            max-width: 80%;
             height: auto;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-            border: 3px solid rgba(100, 150, 255, 0.15); /* 深蓝色边框 */
+            box-shadow: 0 0 25px rgba(0, 100, 255, 0.4);
+            border: 2px solid rgba(100, 180, 255, 0.3);
             background-color: rgba(0, 0, 0, 0.5);
             margin: 30px 0;
         }
         
         .ending {
-            color: #d0e5ff;
+            color: #e6f0ff;
             font-size: 1.3em;
             margin-top: 20px;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
-            background-color: rgba(0, 15, 40, 0.5);
+            text-shadow: 0 0 8px rgba(80, 140, 255, 0.6);
+            background-color: rgba(0, 25, 50, 0.5);
             display: inline-block;
             padding: 12px 25px;
             border-radius: 8px;
@@ -89,7 +89,7 @@
     <!-- 内容区域 -->
     <div class="content">
         <h1>联系微信：xswlan2022</h1>
-        <p class="subtitle">作品如下</p> <!-- 使用独立class确保两行显示 -->
+        <p class="subtitle">作品如下</p>
 
         <!-- 视频播放器 -->
         <video controls autoplay loop muted playsinline>
@@ -125,37 +125,27 @@
                 }
             `;
             
-            // 修改后的片段着色器 - 深蓝色主题
+            // 修改后的片段着色器 - 亮蓝色，密集动态效果
             const fragmentShaderSource = `
                 precision highp float;
                 uniform float iTime;
                 uniform vec2 iResolution;
                 varying vec2 v_uv;
                 
-                // 修改色彩映射为深蓝色系
+                // 亮蓝色色彩映射
                 float colormap_red(float x) {
-                    // 大幅减少红色成分
-                    return 0.0;
+                    // 减少红色，仅在亮部有少许
+                    return x * 0.2;
                 }
                 
                 float colormap_green(float x) {
-                    // 减少绿色成分，仅在中间有少量
-                    if (x < 0.6) {
-                        return 0.0;
-                    } else {
-                        return (x - 0.6) * 0.5;
-                    }
+                    // 中等绿色成分，与蓝色形成青蓝色调
+                    return x * 0.5 + 0.2;
                 }
                 
                 float colormap_blue(float x) {
-                    // 增强蓝色成分，形成深蓝色
-                    if (x < 0.3) {
-                        return x * 0.5 + 0.1;
-                    } else if (x < 0.7) {
-                        return x * 0.7 + 0.2;
-                    } else {
-                        return x * 0.5 + 0.3;
-                    }
+                    // 高亮度蓝色，形成亮蓝色
+                    return x * 0.9 + 0.3;
                 }
                 
                 vec4 colormap(float x) {
@@ -163,9 +153,10 @@
                 }
                 
                 float rand(vec2 n) { 
-                    return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
+                    return fract(sin(dot(n, vec2(12.9898, 78.233))) * 43758.5453);
                 }
                 
+                // 改进的噪声函数，增加细节
                 float noise(vec2 p) {
                     vec2 ip = floor(p);
                     vec2 u = fract(p);
@@ -176,58 +167,86 @@
                         mix(rand(ip+vec2(0.0,1.0)), rand(ip+vec2(1.0,1.0)), u.x), 
                         u.y
                     );
-                    return res*res;
+                    return res;
                 }
                 
                 const mat2 mtx = mat2(0.80, 0.60, -0.60, 0.80);
                 
+                // 增强的fbm函数 - 增加更多层次，提高密度
                 float fbm(vec2 p) {
                     float f = 0.0;
+                    float amplitude = 0.5;
                     
-                    // 所有iTime乘以0.02，速度降至1/50
-                    f += 0.500000 * noise(p + iTime * 0.02);
-                    p = mtx * p * 2.02;
-                    f += 0.031250 * noise(p);
-                    p = mtx * p * 2.01;
-                    f += 0.250000 * noise(p);
-                    p = mtx * p * 2.03;
-                    f += 0.125000 * noise(p);
-                    p = mtx * p * 2.01;
-                    f += 0.062500 * noise(p);
-                    p = mtx * p * 2.04;
-                    f += 0.015625 * noise(p + sin(iTime * 0.02));
+                    // 增加更多噪波层次，提高密度和动态感
+                    f += amplitude * noise(p + iTime * 0.05);
+                    p = mtx * p * 2.0;
+                    amplitude *= 0.5;
                     
-                    return f / 0.96875;
+                    f += amplitude * noise(p + iTime * 0.08);
+                    p = mtx * p * 2.1;
+                    amplitude *= 0.6;
+                    
+                    f += amplitude * noise(p + iTime * 0.12);
+                    p = mtx * p * 2.2;
+                    amplitude *= 0.6;
+                    
+                    f += amplitude * noise(p + iTime * 0.15);
+                    p = mtx * p * 2.3;
+                    amplitude *= 0.7;
+                    
+                    f += amplitude * noise(p + iTime * 0.18);
+                    
+                    return f / 1.2;
                 }
                 
+                // 更复杂的pattern函数，增加视觉密度
                 float pattern(vec2 p) {
-                    return fbm(p + fbm(p + fbm(p)));
+                    float scale = 2.0;
+                    p *= scale;
+                    
+                    float value = 0.0;
+                    float amplitude = 1.0;
+                    
+                    // 多重fbm叠加，增加密度
+                    for (int i = 0; i < 3; i++) {
+                        value += amplitude * fbm(p);
+                        p = mtx * p * 1.8 + vec2(0.5, 0.5);
+                        amplitude *= 0.6;
+                    }
+                    
+                    return value / 1.5;
                 }
                 
                 void main() {
                     vec2 uv = v_uv * iResolution.xy / iResolution.x;
-                    float shade = pattern(uv);
                     
-                    // 调整颜色输出：深蓝色噪波 + 纯黑底色
+                    // 调整UV缩放，使噪波更密集
+                    uv *= 3.0;
+                    
+                    float shade = pattern(uv + vec2(iTime * 0.03, iTime * 0.02));
+                    
+                    // 增强亮蓝色输出
                     vec4 color = vec4(colormap(shade).rgb, 1.0);
                     
-                    // 降低整体亮度，突出深蓝色
-                    color.rgb *= 0.5;
+                    // 提高整体亮度和饱和度
+                    color.rgb *= 1.3;
                     
-                    // 增加蓝色成分
-                    color.b = min(1.0, color.b * 1.3);
+                    // 增强蓝色成分
+                    color.b = min(1.0, color.b * 1.5);
                     
-                    // 强化黑色背景：使暗部更暗
+                    // 增加对比度，使亮蓝色更突出
+                    float contrast = 1.4;
+                    color.rgb = (color.rgb - 0.5) * contrast + 0.5;
+                    
+                    // 发光效果
+                    float glow = shade * 0.8;
+                    color.rgb += vec3(0.2, 0.4, 0.8) * glow * 0.5;
+                    
+                    // 降低暗部，增强对比
                     float brightness = (color.r + color.g + color.b) / 3.0;
-                    if (brightness < 0.4) {
-                        color.rgb *= 0.4;
+                    if (brightness < 0.3) {
+                        color.rgb *= 0.5;
                     }
-                    
-                    // 增加中心区域的可见度
-                    vec2 centerVec = uv - vec2(0.5 * iResolution.x / iResolution.y, 0.5);
-                    float centerDist = length(centerVec);
-                    float vignette = 1.0 - smoothstep(0.3, 1.0, centerDist);
-                    color.rgb *= 0.7 + 0.3 * vignette;
                     
                     gl_FragColor = color;
                 }
@@ -286,7 +305,7 @@
                 gl.uniform1f(iTimeLocation, elapsedTime);
                 gl.uniform2f(iResolutionLocation, canvas.width, canvas.height);
                 
-                gl.clearColor(0, 0, 0, 1); // 纯黑色清除颜色
+                gl.clearColor(0, 0, 0, 1);
                 gl.clear(gl.COLOR_BUFFER_BIT);
                 gl.drawArrays(gl.TRIANGLES, 0, 6);
                 
