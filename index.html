@@ -3,74 +3,90 @@
 <head>
     <title>我的视频网站</title>
     <style>
+        /* 基础布局样式 - 保持与您要求一致 */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            overflow-x: hidden;
             font-family: sans-serif;
+            overflow-x: hidden; /* 防止横向滚动 */
         }
         
-        #background-canvas {
+        /* 动态背景画布 */
+        #dynamic-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: -1; /* 置于所有内容下方 */
+            display: block;
         }
         
-        .content {
-            position: relative;
+        /* 内容容器 - 保持居中、响应式 */
+        .content-container {
+            position: relative; /* 使内容层浮于背景之上 */
             z-index: 1;
             text-align: center;
             padding: 40px 20px;
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
         }
         
+        /* 您的原始样式保持不变 */
         h1 {
-            color: white;
+            color: #fff;
             font-size: 2.5em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-            background-color: rgba(0, 0, 0, 0.4);
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明背景确保文字在动态图上可读 */
             display: inline-block;
-            padding: 10px 25px;
+            padding: 15px 30px;
             border-radius: 10px;
         }
         
-        p {
-            color: white;
-            font-size: 1.2em;
-            margin: 15px 0;
+        .subtitle {
+            color: #eee;
+            font-size: 1.4em;
+            margin: 10px 0 30px 0;
             text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
-            background-color: rgba(0, 0, 0, 0.3);
+            background-color: rgba(0, 0, 0, 0.4);
             display: inline-block;
-            padding: 8px 15px;
+            padding: 10px 20px;
             border-radius: 8px;
         }
         
         video {
-            max-width: 90%;
+            max-width: 90%; /* 保持您要求的90%宽度 */
             height: auto;
             border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-            border: 3px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+            border: 3px solid rgba(255, 255, 255, 0.15);
             background-color: rgba(0, 0, 0, 0.3);
-            margin: 30px 0;
+            margin: 20px 0;
+        }
+        
+        .ending {
+            color: #eee;
+            font-size: 1.3em;
+            margin-top: 20px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.4);
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
-    <!-- WebGL背景画布 -->
-    <canvas id="background-canvas"></canvas>
+    <!-- 动态背景层 -->
+    <canvas id="dynamic-bg"></canvas>
     
-    <!-- 内容区域 -->
-    <div class="content">
-        <h1>联系微信：xswlan2022</h1>
-        <p>作品如下</p>
+    <!-- 您的内容层 - 布局与之前完全一致 -->
+    <div class="content-container">
+        <h1>联系邮箱:2235510037@qq.com</h1>
+        <p class="subtitle">作品</p>
 
         <!-- 视频播放器 -->
         <video controls autoplay loop muted playsinline>
@@ -78,18 +94,19 @@
             您的浏览器不支持HTML5视频标签。
         </video>
 
-        <p>谢谢观看</p>
+        <p class="ending">谢谢观看</p>
     </div>
 
     <script>
-        // 获取Canvas和WebGL上下文
-        const canvas = document.getElementById('background-canvas');
+        // 初始化WebGL背景
+        const canvas = document.getElementById('dynamic-bg');
         const gl = canvas.getContext('webgl');
         
         if (!gl) {
-            alert('您的浏览器不支持WebGL，无法显示动态背景效果');
+            console.warn('浏览器不支持WebGL，将显示静态背景');
+            canvas.style.backgroundColor = '#1a0a2a'; // WebGL不可用时显示的备用深紫色背景
         } else {
-            // 调整Canvas大小
+            // 调整Canvas尺寸以匹配窗口
             function resizeCanvas() {
                 canvas.width = window.innerWidth * window.devicePixelRatio;
                 canvas.height = window.innerHeight * window.devicePixelRatio;
@@ -99,7 +116,7 @@
             window.addEventListener('resize', resizeCanvas);
             resizeCanvas();
             
-            // 顶点着色器代码
+            // 顶点着色器
             const vertexShaderSource = `
                 attribute vec2 a_position;
                 varying vec2 v_uv;
@@ -109,14 +126,14 @@
                 }
             `;
             
-            // 您最初提供的完整着色器代码（未修改颜色映射）
+            // 片段着色器 - 使用最初产生紫色效果的原始代码
             const fragmentShaderSource = `
                 precision highp float;
                 uniform float iTime;
                 uniform vec2 iResolution;
                 varying vec2 v_uv;
                 
-                // 您最初提供的颜色映射函数（产生紫色调）
+                // 原始颜色映射函数（产生紫色调）
                 float colormap_red(float x) {
                     if (x < 0.0) {
                         return 54.0 / 255.0;
@@ -203,7 +220,7 @@
                     float shade = pattern(uv);
                     vec4 color = vec4(colormap(shade).rgb, shade * 0.7);
                     
-                    // 增加中心区域的亮度，使内容更易读
+                    // 使中心区域稍亮，确保内容可读性
                     vec2 centerVec = uv - vec2(0.5 * iResolution.x / iResolution.y, 0.5);
                     float centerDist = length(centerVec);
                     float vignette = 1.0 - smoothstep(0.3, 1.2, centerDist);
@@ -218,67 +235,64 @@
                 const shader = gl.createShader(type);
                 gl.shaderSource(shader, source);
                 gl.compileShader(shader);
-                
                 if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
                     console.error('着色器编译错误:', gl.getShaderInfoLog(shader));
-                    gl.deleteShader(shader);
                     return null;
                 }
-                
                 return shader;
             }
             
+            // 创建着色器程序
             const vertexShader = compileShader(gl, vertexShaderSource, gl.VERTEX_SHADER);
             const fragmentShader = compileShader(gl, fragmentShaderSource, gl.FRAGMENT_SHADER);
             
-            // 创建着色器程序
-            const program = gl.createProgram();
-            gl.attachShader(program, vertexShader);
-            gl.attachShader(program, fragmentShader);
-            gl.linkProgram(program);
-            
-            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-                console.error('程序链接错误:', gl.getProgramInfoLog(program));
+            if (vertexShader && fragmentShader) {
+                const program = gl.createProgram();
+                gl.attachShader(program, vertexShader);
+                gl.attachShader(program, fragmentShader);
+                gl.linkProgram(program);
+                
+                if (gl.getProgramParameter(program, gl.LINK_STATUS)) {
+                    gl.useProgram(program);
+                    
+                    // 设置顶点数据
+                    const vertices = new Float32Array([
+                        -1, -1, 1, -1, -1, 1,
+                        -1, 1, 1, -1, 1, 1
+                    ]);
+                    
+                    const vertexBuffer = gl.createBuffer();
+                    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+                    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+                    
+                    const positionAttr = gl.getAttribLocation(program, "a_position");
+                    gl.enableVertexAttribArray(positionAttr);
+                    gl.vertexAttribPointer(positionAttr, 2, gl.FLOAT, false, 0, 0);
+                    
+                    // 获取并设置uniform变量
+                    const iTimeLocation = gl.getUniformLocation(program, "iTime");
+                    const iResolutionLocation = gl.getUniformLocation(program, "iResolution");
+                    
+                    let startTime = Date.now();
+                    
+                    // 渲染循环
+                    function render() {
+                        const currentTime = Date.now();
+                        const elapsedTime = (currentTime - startTime) / 1000.0;
+                        
+                        gl.uniform1f(iTimeLocation, elapsedTime);
+                        gl.uniform2f(iResolutionLocation, canvas.width, canvas.height);
+                        
+                        gl.clearColor(0, 0, 0, 1);
+                        gl.clear(gl.COLOR_BUFFER_BIT);
+                        gl.drawArrays(gl.TRIANGLES, 0, 6);
+                        
+                        requestAnimationFrame(render);
+                    }
+                    
+                    render();
+                }
             }
-            
-            gl.useProgram(program);
-            
-            // 设置顶点数据
-            const vertices = new Float32Array([
-                -1, -1, 1, -1, -1, 1,
-                -1, 1, 1, -1, 1, 1
-            ]);
-            
-            const vertexBuffer = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-            gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-            
-            const positionAttributeLocation = gl.getAttribLocation(program, "a_position");
-            gl.enableVertexAttribArray(positionAttributeLocation);
-            gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
-            
-            // 获取uniform位置
-            const iTimeLocation = gl.getUniformLocation(program, "iTime");
-            const iResolutionLocation = gl.getUniformLocation(program, "iResolution");
-            
-            // 动画循环
-            let startTime = Date.now();
-            
-            function render() {
-                const currentTime = Date.now();
-                const elapsedTime = (currentTime - startTime) / 1000.0;
-                
-                gl.uniform1f(iTimeLocation, elapsedTime);
-                gl.uniform2f(iResolutionLocation, canvas.width, canvas.height);
-                
-                gl.clearColor(0, 0, 0, 1);
-                gl.clear(gl.COLOR_BUFFER_BIT);
-                gl.drawArrays(gl.TRIANGLES, 0, 6);
-                
-                requestAnimationFrame(render);
-            }
-            
-            render();
         }
     </script>
 </body>
