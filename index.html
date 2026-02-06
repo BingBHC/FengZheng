@@ -1,116 +1,403 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>我的视频网站</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创新科技 | 您的公司名</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body, html {
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --dark: #121212;
+            --light: #f8f9fa;
+            --gray: #2d2d2d;
+        }
+        
+        * {
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
-            font-family: sans-serif;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
             overflow-x: hidden;
         }
         
-        #dynamic-bg {
+        /* 导航栏样式 */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
             position: fixed;
+            width: 100%;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            display: block;
+            z-index: 1000;
+            background-color: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         
-        /* 内容容器：恢复您原始的居中布局 */
-        .content-container {
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
             position: relative;
-            z-index: 1;
-            text-align: center;
-            /* 移除了max-width限制，使用与您原代码相同的padding */
-            padding: 40px 20px;
-            /* 确保容器足够宽，让内部元素按自身宽度居中 */
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
             width: 100%;
-            box-sizing: border-box;
         }
         
-        /* 主标题：恢复为独占一行的块级元素 */
-        h1 {
-            color: #fff;
-            font-size: 2.5em;
-            margin: 0 auto 15px auto; /* 上下边距，左右自动实现居中 */
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
-            background-color: rgba(0, 0, 0, 0.5);
-            /* 关键修正：恢复为 block，确保独占一行 */
-            display: block;
-            width: fit-content; /* 宽度由内容决定 */
-            padding: 15px 30px;
-            border-radius: 10px;
+        /* 主要区域通用样式 */
+        section {
+            padding: 5rem 5%;
         }
         
-        /* 副标题：同样恢复为独占一行的块级元素 */
-        .subtitle {
-            color: #eee;
-            font-size: 1.4em;
-            /* 关键修正：确保它作为一个新行开始 */
-            margin: 0 auto 30px auto;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
-            background-color: rgba(0, 0, 0, 0.4);
-            display: block; /* 不是 inline-block */
-            width: fit-content;
-            padding: 10px 20px;
-            border-radius: 8px;
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
         }
         
-        /* 视频：严格保持您最初要求的90%宽度和样式 */
-        video {
-            max-width: 90%; /* 已修正，确保与您的要求一致 */
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
-            border: 3px solid rgba(255, 255, 255, 0.15);
-            background-color: rgba(0, 0, 0, 0.3);
-            margin: 20px 0;
-            /* 确保视频本身是块级元素，并在容器内居中 */
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
         }
         
-        /* 结束语样式 */
-        .ending {
-            color: #eee;
-            font-size: 1.3em;
-            margin-top: 20px;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
-            background-color: rgba(0, 0, 0, 0.4);
+        /* 英雄区域样式 */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 80px;
+            background: radial-gradient(circle at 20% 50%, rgba(67, 97, 238, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(76, 201, 240, 0.1) 0%, transparent 50%);
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+            color: #ccc;
+        }
+        
+        .cta-button {
             display: inline-block;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.4);
+        }
+        
+        /* 服务区域样式 */
+        .services {
+            background-color: rgba(30, 30, 30, 0.7);
+        }
+        
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: transform 0.3s, background 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(76, 201, 240, 0.2);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* 关于我们区域样式 */
+        .about {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .about-content {
+            max-width: 800px;
+            text-align: center;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        
+        .about-content p {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: #0a0a0a;
+            padding: 3rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .contact-info div {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .services-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 有趣的悬浮动画 */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .floating {
+            animation: float 5s ease-in-out infinite;
         }
     </style>
 </head>
 <body>
-    <!-- 动态背景层 -->
-    <canvas id="dynamic-bg"></canvas>
-    
-    <!-- 您的内容层 -->
-    <div class="content-container">
-        <h1>联系邮箱:2235510037@qq.com</h1>
-        <p class="subtitle">作品</p>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="logo">
+            <!-- 🖊️ 在这里替换为您的公司名称或LOGO -->
+            创新科技
+        </div>
+        <div class="nav-links">
+            <!-- 🖊️ 在这里修改或添加导航菜单项 -->
+            <a href="#home">首页</a>
+            <a href="#services">服务</a>
+            <a href="#about">关于我们</a>
+            <a href="#contact">联系我们</a>
+        </div>
+    </nav>
 
-        <!-- 视频播放器 -->
-        <video controls autoplay loop muted playsinline>
-            <source src="VFX_A.mp4" type="video/mp4">
-            您的浏览器不支持HTML5视频标签。
-        </video>
+    <!-- 英雄区域 (Hero Section) -->
+    <section id="home" class="hero">
+        <!-- 🖊️ 修改主标题 -->
+        <h1>创造未来，<span class="floating">始于今日</span></h1>
+        <!-- 🖊️ 修改副标题 -->
+        <p>我们是一家专注于通过创新技术解决复杂问题的公司，致力于为客户提供卓越的解决方案，推动行业进步。</p>
+        <!-- 🖊️ 修改按钮文字和链接 -->
+        <a href="#contact" class="cta-button">开启合作 <i class="fas fa-arrow-right"></i></a>
+    </section>
 
-        <p class="ending">谢谢观看</p>
-    </div>
+    <!-- 服务区域 -->
+    <section id="services" class="services">
+        <h2 class="section-title">我们的核心服务</h2>
+        <div class="services-container">
+            <!-- 服务卡片 1 -->
+            <div class="service-card">
+                <!-- 🖊️ 替换图标和文字 -->
+                <div class="service-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3>定制软件开发</h3>
+                <p>根据您的业务需求，开发高效、可扩展的定制软件解决方案，助力数字化转型。</p>
+            </div>
+            <!-- 服务卡片 2 -->
+            <div class="service-card">
+                <!-- 🖊️ 替换图标和文字 -->
+                <div class="service-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>人工智能咨询</h3>
+                <p>提供前沿的AI技术咨询与实施方案，帮助您发掘数据潜力，实现智能决策。</p>
+            </div>
+            <!-- 服务卡片 3 -->
+            <div class="service-card">
+                <!-- 🖊️ 替换图标和文字 -->
+                <div class="service-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>数字战略规划</h3>
+                <p>结合行业洞察与技术趋势，为您制定清晰的数字转型路线图与增长战略。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我们区域 -->
+    <section id="about" class="about">
+        <h2 class="section-title">关于我们</h2>
+        <div class="about-content">
+            <!-- 🖊️ 在这里详细填写公司介绍 -->
+            <p>我们成立于2020年，由一群充满激情的工程师和设计师组成。公司总部位于上海，在北京和深圳设有分支机构。我们的使命是通过技术创新让世界更高效、更互联。</p>
+            <p>我们坚信，最好的解决方案来源于对客户需求的深刻理解与技术的创造性结合。至今，我们已为超过百家知名企业提供了成功的数字化解决方案，并获得了业界的广泛认可。</p>
+            <p>我们的团队持续学习，紧跟科技前沿，致力于将最新的技术成果转化为客户的实际竞争力。</p>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="footer-content">
+            <!-- 🖊️ 修改公司名称 -->
+            <h3>创新科技有限公司</h3>
+            <div class="contact-info">
+                <!-- 🖊️ 修改联系方式 -->
+                <div><i class="fas fa-map-marker-alt"></i> 上海市浦东新区科技园区123号</div>
+                <div><i class="fas fa-phone"></i> (021) 1234-5678</div>
+                <div><i class="fas fa-envelope"></i> contact@innotech.com</div>
+            </div>
+        </div>
+        <!-- 🖊️ 修改版权信息 -->
+        <div class="copyright">
+            &copy; 2023 创新科技有限公司 版权所有
+        </div>
+    </footer>
 
     <script>
-        // WebGL背景初始化脚本（与上一次提供的完全一致，此处为节省篇幅已省略，您可直接使用上一次回答中的完整script部分）
-        // ... 为确保代码完整，您需要将上一个回答中从 `<script>` 到 `</script>` 的全部JavaScript代码复制到这里 ...
+        // 简单的导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.backgroundColor = 'rgba(18, 18, 18, 0.98)';
+                nav.style.padding = '1rem 5%';
+            } else {
+                nav.style.backgroundColor = 'rgba(18, 18, 18, 0.95)';
+                nav.style.padding = '1.5rem 5%';
+            }
+        });
+        
+        // 平滑滚动到锚点
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 为服务卡片添加随机悬浮延迟，产生波浪效果
+        document.querySelectorAll('.service-card').forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.2}s`;
+        });
     </script>
 </body>
 </html>
