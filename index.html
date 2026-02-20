@@ -84,31 +84,7 @@
             width: 100%;
         }
         
-        /* 主要区域通用样式 */
-        section {
-            padding: 5rem 5%;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 2px;
-        }
-        
-        /* 英雄区域样式 */
+        /* 英雄区域样式 (保持原来的渐变背景和文字) */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -153,6 +129,61 @@
         .cta-button:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(67, 97, 238, 0.4);
+        }
+        
+        /* ===== 新增：视频展示区域 ===== */
+        .video-showcase {
+            width: 100%;
+            padding: 4rem 5%;
+            background-color: var(--dark);
+            text-align: center;
+        }
+        
+        .video-showcase h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+        }
+        
+        .video-showcase video {
+            width: 100%;
+            max-width: 1200px;  /* 限制最大宽度 */
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(76, 201, 240, 0.2);
+            margin: 0 auto;
+            display: block;
+        }
+        
+        .video-caption {
+            margin-top: 1.5rem;
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+        
+        /* 主要区域通用样式 */
+        section {
+            padding: 5rem 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
         }
         
         /* 服务区域样式 */
@@ -289,38 +320,39 @@
         </div>
     </nav>
 
-    <!-- 英雄区域 (Hero Section) -->
+    <!-- 英雄区域 (渐变背景 + 文字) -->
     <section id="home" class="hero">
         <h1>创造视觉奇观，<span class="floating">定义数字体验</span></h1>
         <p>怀化市丰正科技有限责任公司，专注于游戏与影视特效制作，凭借行业顶尖的技术与艺术团队，为您的项目注入令人惊叹的视觉力量。专业、可靠、精准交付。</p>
         <a href="#contact" class="cta-button">开启特效合作 <i class="fas fa-magic"></i></a>
     </section>
 
+    <!-- ===== 新增：视频展示区 (随页面滚动) ===== -->
+    <div class="video-showcase">
+        <h2>作品展示</h2>
+        <video controls autoplay loop muted playsinline>
+            <source src="VFX_A.mp4" type="video/mp4">
+            您的浏览器不支持 video 标签。
+        </video>
+        <div class="video-caption">—— 公司特效作品混剪 ——</div>
+    </div>
+
     <!-- 服务区域 -->
     <section id="services" class="services">
         <h2 class="section-title">核心业务</h2>
         <div class="services-container">
-            <!-- 服务卡片 1 -->
             <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-gamepad"></i>
-                </div>
+                <div class="service-icon"><i class="fas fa-gamepad"></i></div>
                 <h3>游戏特效制作</h3>
                 <p>为各类游戏提供高质量的特效解决方案，包括技能特效、场景互动、UI动效等，显著提升游戏的沉浸感与市场竞争力。</p>
             </div>
-            <!-- 服务卡片 2 -->
             <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-film"></i>
-                </div>
+                <div class="service-icon"><i class="fas fa-film"></i></div>
                 <h3>影视特效制作</h3>
                 <p>为电影、剧集、广告提供从概念到成片的专业视觉特效（VFX）服务，涵盖粒子、流体、角色特效及后期合成。</p>
             </div>
-            <!-- 服务卡片 3 -->
             <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-bolt"></i>
-                </div>
+                <div class="service-icon"><i class="fas fa-bolt"></i></div>
                 <h3>实时交互特效</h3>
                 <p>基于UE5与Unity引擎，为VR/AR、虚拟制片及大型活动打造高性能、可交互的实时特效，驱动创新体验。</p>
             </div>
@@ -352,7 +384,7 @@
     </footer>
 
     <script>
-        // 简单的导航栏滚动效果
+        // 导航栏滚动效果
         window.addEventListener('scroll', function() {
             const nav = document.querySelector('nav');
             if (window.scrollY > 50) {
@@ -381,7 +413,7 @@
             });
         });
         
-        // 为服务卡片添加随机悬浮延迟，产生波浪效果
+        // 为服务卡片添加随机悬浮延迟
         document.querySelectorAll('.service-card').forEach((card, index) => {
             card.style.animationDelay = `${index * 0.2}s`;
         });
