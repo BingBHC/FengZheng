@@ -144,13 +144,18 @@
             z-index: 1;
         }
         
-        /* 英雄区域的文字内容 */
-        .hero h1,
-        .hero p,
-        .hero .cta-button {
+        /* 英雄区域的文字内容 - 强化居中 */
+        .hero-content {
             position: relative;
             z-index: 2;
-            max-width: 90%; /* 确保在窄屏上不溢出 */
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         
         .hero h1 {
@@ -162,10 +167,11 @@
             line-height: 1.2;
             text-align: center;
             width: 100%;
+            word-break: keep-all; /* 防止中西文混排时断词 */
         }
         
         .hero h1 span {
-            display: inline-block; /* 确保动画元素不影响整体居中 */
+            display: inline-block;
         }
         
         .hero p {
@@ -173,6 +179,8 @@
             max-width: 700px;
             margin-bottom: 2.5rem;
             color: #ccc;
+            text-align: center;
+            width: 100%;
         }
         
         .cta-button {
@@ -186,6 +194,8 @@
             font-size: 1.1rem;
             transition: all 0.3s;
             box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+            border: none;
+            cursor: pointer;
         }
         
         .cta-button:hover {
@@ -336,11 +346,15 @@
         </video>
         <!-- 遮罩层 -->
         <div class="overlay"></div>
-        <!-- 文字内容 -->
-        <!-- 修改后的标题：去掉逗号，保持居中 -->
-        <h1>创造视觉奇观 <span class="floating">定义数字体验</span></h1>
-        <p>怀化市丰正科技有限责任公司，专注于游戏与影视特效制作，凭借行业顶尖的技术与艺术团队，为您的项目注入令人惊叹的视觉力量。专业、可靠、精准交付。</p>
-        <a href="#contact" class="cta-button">开启特效合作 <i class="fas fa-magic"></i></a>
+        
+        <!-- 文字内容容器 - 确保居中 -->
+        <div class="hero-content">
+            <!-- 标题：去掉逗号，保留空格 -->
+            <h1>创造视觉奇观 <span class="floating">定义数字体验</span></h1>
+            <p>怀化市丰正科技有限责任公司，专注于游戏与影视特效制作，凭借行业顶尖的技术与艺术团队，为您的项目注入令人惊叹的视觉力量。专业、可靠、精准交付。</p>
+            <!-- 按钮：去掉末尾斜杠 -->
+            <a href="#contact" class="cta-button">开启特效合作 <i class="fas fa-magic"></i></a>
+        </div>
     </section>
 
     <!-- 服务区域 -->
