@@ -130,17 +130,19 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
+            /* 默认视频居中，手机端将改为顶部对齐 */
+            object-position: center;
             z-index: 0;
         }
         
-        /* 半透明遮罩层 */
+        /* 半透明遮罩层 - 调高不透明度至0.95，使文字更清晰 */
         .hero .overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.95); /* 从0.6改为0.95 */
             z-index: 1;
         }
         
@@ -154,7 +156,7 @@
             text-align: center;
         }
         
-        /* 关键修改：增强h1的居中属性，修复渐变文字渲染问题 */
+        /* 标题样式 */
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
@@ -164,14 +166,16 @@
             line-height: 1.2;
             text-align: center;
             width: 100%;
-            display: block; /* 显式声明块级元素 */
-            margin-left: auto; /* 强制水平居中 */
-            margin-right: auto; /* 强制水平居中 */
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            /* 确保长文本自动换行 */
+            word-wrap: break-word;
+            word-break: break-word;
         }
         
-        /* 优化span样式：移除可能干扰居中的inline-block，保留动画 */
         .hero h1 span {
-            color: inherit;                
+            color: inherit;
             -webkit-text-fill-color: inherit;
             background: inherit;
             -webkit-background-clip: inherit;
@@ -296,14 +300,31 @@
             font-size: 0.9rem;
         }
         
-        /* 响应式设计 */
+        /* ========== 响应式设计 - 手机端专属 ========== */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
             
+            .hero {
+                /* 改变垂直对齐为底部，让文字在下方 */
+                align-items: flex-end;
+                padding-bottom: 10vh; /* 让文字离底部有一定距离，不贴边 */
+            }
+            
+            .hero video {
+                /* 视频顶部对齐，使内容上移，底部留出黑边 */
+                object-position: top;
+            }
+            
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2.5rem; /* 缩小标题适应手机 */
+                margin-bottom: 1rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
             }
             
             .section-title {
