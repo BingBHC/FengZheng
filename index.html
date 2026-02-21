@@ -161,12 +161,17 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             line-height: 1.2;
-            text-align: center;   /* 确保文字水平居中 */
+            text-align: center;
             width: 100%;
         }
         
+        /* 修复span文字可能不显示的问题 */
         .hero h1 span {
             display: inline-block;
+            color: inherit;                /* 强制继承文字颜色 */
+            -webkit-text-fill-color: inherit; /* 确保渐变效果继承 */
+            background: inherit;
+            -webkit-background-clip: inherit;
         }
         
         .hero p {
