@@ -55,7 +55,7 @@
         .nav-links {
             display: flex;
             gap: 2rem;
-            flex-wrap: wrap;          /* 防止在小屏幕上挤压 */
+            flex-wrap: wrap;
             justify-content: flex-end;
         }
         
@@ -65,7 +65,7 @@
             font-weight: 500;
             transition: color 0.3s;
             position: relative;
-            white-space: nowrap;      /* 防止文字换行 */
+            white-space: nowrap;
         }
         
         .nav-links a:hover {
@@ -114,10 +114,10 @@
         /* 英雄区域样式 - 视频背景 */
         .hero {
             position: relative;
-            height: 100vh;                /* 固定为视口高度，保证垂直居中准确 */
+            height: 100vh;
             display: flex;
-            align-items: center;           /* 垂直居中 */
-            justify-content: center;       /* 水平居中 */
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
             background-color: var(--dark);
         }
@@ -144,7 +144,7 @@
             z-index: 1;
         }
         
-        /* 英雄区域的文字容器 - 使用 Flex 居中 */
+        /* 英雄区域的文字容器 */
         .hero-content {
             position: relative;
             z-index: 2;
@@ -152,9 +152,6 @@
             max-width: 1200px;
             padding: 0 20px;
             text-align: center;
-            /* 临时半透明红底，方便观察居中效果，测试后可以删除下面两行 */
-            background: rgba(255, 0, 0, 0.3);
-            border-radius: 10px;
         }
         
         .hero h1 {
@@ -164,7 +161,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             line-height: 1.2;
-            text-align: center;
+            text-align: center;   /* 确保文字水平居中 */
             width: 100%;
         }
         
@@ -175,7 +172,7 @@
         .hero p {
             font-size: 1.3rem;
             max-width: 700px;
-            margin: 0 auto 2.5rem auto;   /* 水平居中 */
+            margin: 0 auto 2.5rem auto;
             color: #ccc;
             text-align: center;
             width: 100%;
@@ -294,7 +291,7 @@
         /* 响应式设计 */
         @media (max-width: 768px) {
             .nav-links {
-                display: none;   /* 移动端隐藏导航链接，可按需改为下拉菜单 */
+                display: none;
             }
             
             .hero h1 {
@@ -345,7 +342,7 @@
         <!-- 遮罩层 -->
         <div class="overlay"></div>
         
-        <!-- 文字内容容器 - 带有半透明红底，便于观察居中 -->
+        <!-- 文字内容容器 -->
         <div class="hero-content">
             <h1>创造视觉奇观 <span class="floating">定义数字体验</span></h1>
             <p>怀化市丰正科技有限责任公司，专注于游戏与影视特效制作，凭借行业顶尖的技术与艺术团队，为您的项目注入令人惊叹的视觉力量。专业、可靠、精准交付。</p>
@@ -400,7 +397,6 @@
     </footer>
 
     <script>
-        // 简单的导航栏滚动效果
         window.addEventListener('scroll', function() {
             const nav = document.querySelector('nav');
             if (window.scrollY > 50) {
@@ -412,7 +408,6 @@
             }
         });
         
-        // 平滑滚动到锚点
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -429,7 +424,6 @@
             });
         });
         
-        // 为服务卡片添加随机悬浮延迟，产生波浪效果
         document.querySelectorAll('.service-card').forEach((card, index) => {
             card.style.animationDelay = `${index * 0.2}s`;
         });
