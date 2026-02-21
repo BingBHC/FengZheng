@@ -55,6 +55,8 @@
         .nav-links {
             display: flex;
             gap: 2rem;
+            flex-wrap: wrap;          /* 防止在小屏幕上挤压 */
+            justify-content: flex-end;
         }
         
         .nav-links a {
@@ -63,6 +65,7 @@
             font-weight: 500;
             transition: color 0.3s;
             position: relative;
+            white-space: nowrap;      /* 防止文字换行 */
         }
         
         .nav-links a:hover {
@@ -111,7 +114,10 @@
         /* 英雄区域样式 - 视频背景 */
         .hero {
             position: relative;
-            min-height: 100vh;
+            height: 100vh;                /* 固定为视口高度，保证垂直居中准确 */
+            display: flex;
+            align-items: center;           /* 垂直居中 */
+            justify-content: center;       /* 水平居中 */
             overflow: hidden;
             background-color: var(--dark);
         }
@@ -138,18 +144,17 @@
             z-index: 1;
         }
         
-        /* 英雄区域的文字容器 - 绝对定位居中 */
+        /* 英雄区域的文字容器 - 使用 Flex 居中 */
         .hero-content {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
+            z-index: 2;
             width: 100%;
             max-width: 1200px;
             padding: 0 20px;
             text-align: center;
-            z-index: 2;
-            box-sizing: border-box;
+            /* 临时半透明红底，方便观察居中效果，测试后可以删除下面两行 */
+            background: rgba(255, 0, 0, 0.3);
+            border-radius: 10px;
         }
         
         .hero h1 {
@@ -170,7 +175,7 @@
         .hero p {
             font-size: 1.3rem;
             max-width: 700px;
-            margin: 0 auto 2.5rem auto; /* 上下左右自动居中 */
+            margin: 0 auto 2.5rem auto;   /* 水平居中 */
             color: #ccc;
             text-align: center;
             width: 100%;
@@ -289,7 +294,7 @@
         /* 响应式设计 */
         @media (max-width: 768px) {
             .nav-links {
-                display: none;
+                display: none;   /* 移动端隐藏导航链接，可按需改为下拉菜单 */
             }
             
             .hero h1 {
@@ -340,7 +345,7 @@
         <!-- 遮罩层 -->
         <div class="overlay"></div>
         
-        <!-- 文字内容容器 - 绝对定位居中 -->
+        <!-- 文字内容容器 - 带有半透明红底，便于观察居中 -->
         <div class="hero-content">
             <h1>创造视觉奇观 <span class="floating">定义数字体验</span></h1>
             <p>怀化市丰正科技有限责任公司，专注于游戏与影视特效制作，凭借行业顶尖的技术与艺术团队，为您的项目注入令人惊叹的视觉力量。专业、可靠、精准交付。</p>
@@ -352,27 +357,18 @@
     <section id="services" class="services">
         <h2 class="section-title">核心业务</h2>
         <div class="services-container">
-            <!-- 服务卡片 1 -->
             <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-gamepad"></i>
-                </div>
+                <div class="service-icon"><i class="fas fa-gamepad"></i></div>
                 <h3>游戏特效制作</h3>
                 <p>为各类游戏提供高质量的特效解决方案，包括技能特效、场景互动、UI动效等，显著提升游戏的沉浸感与市场竞争力。</p>
             </div>
-            <!-- 服务卡片 2 -->
             <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-film"></i>
-                </div>
+                <div class="service-icon"><i class="fas fa-film"></i></div>
                 <h3>影视特效制作</h3>
                 <p>为电影、剧集、广告提供从概念到成片的专业视觉特效（VFX）服务，涵盖粒子、流体、角色特效及后期合成。</p>
             </div>
-            <!-- 服务卡片 3 -->
             <div class="service-card">
-                <div class="service-icon">
-                    <i class="fas fa-bolt"></i>
-                </div>
+                <div class="service-icon"><i class="fas fa-bolt"></i></div>
                 <h3>实时交互特效</h3>
                 <p>基于UE5与Unity引擎，为VR/AR、虚拟制片及大型活动打造高性能、可交互的实时特效，驱动创新体验。</p>
             </div>
