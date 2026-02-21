@@ -154,6 +154,7 @@
             text-align: center;
         }
         
+        /* 关键修改：增强h1的居中属性，修复渐变文字渲染问题 */
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
@@ -163,13 +164,15 @@
             line-height: 1.2;
             text-align: center;
             width: 100%;
+            display: block; /* 显式声明块级元素 */
+            margin-left: auto; /* 强制水平居中 */
+            margin-right: auto; /* 强制水平居中 */
         }
         
-        /* 修复span文字可能不显示的问题 */
+        /* 优化span样式：移除可能干扰居中的inline-block，保留动画 */
         .hero h1 span {
-            display: inline-block;
-            color: inherit;                /* 强制继承文字颜色 */
-            -webkit-text-fill-color: inherit; /* 确保渐变效果继承 */
+            color: inherit;                
+            -webkit-text-fill-color: inherit;
             background: inherit;
             -webkit-background-clip: inherit;
         }
