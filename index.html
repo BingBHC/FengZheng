@@ -134,14 +134,14 @@
             z-index: 0;
         }
         
-        /* 半透明遮罩层 - 调整为几乎透明 (0.05) 让视频更清晰 */
+        /* 半透明遮罩层 - 几乎透明 (0.05) */
         .hero .overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.05); /* 从0.95改为0.05，让视频更清晰 */
+            background: rgba(0, 0, 0, 0.05);
             z-index: 1;
         }
         
@@ -168,7 +168,6 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
-            /* 强制自动换行 */
             white-space: normal;
             word-wrap: break-word;
             word-break: break-word;
@@ -308,18 +307,20 @@
             }
             
             .hero {
+                /* 添加上内边距，让内容避开固定导航栏（导航栏高度约80px） */
+                padding-top: 80px;
                 /* 文字底部对齐 */
                 align-items: flex-end;
-                padding-bottom: 10vh; /* 文字离底部一定距离 */
+                padding-bottom: 10vh; /* 文字离底部距离 */
             }
             
             .hero video {
-                /* 视频顶部对齐，让主要内容上移，底部留黑边 */
+                /* 视频顶部对齐，让主要内容上移 */
                 object-position: top;
             }
             
             .hero h1 {
-                font-size: 2.5rem; /* 缩小标题适应手机 */
+                font-size: 2.5rem;
                 margin-bottom: 1rem;
             }
             
