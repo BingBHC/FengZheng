@@ -134,7 +134,7 @@
             z-index: 0;
         }
         
-        /* 半透明遮罩层 - 几乎透明 (0.05) */
+        /* 半透明遮罩层 - 调整为几乎透明 (0.05) 让视频更清晰 */
         .hero .overlay {
             position: absolute;
             top: 0;
@@ -307,16 +307,15 @@
             }
             
             .hero {
-                /* 添加上内边距，让内容避开固定导航栏（导航栏高度约80px） */
-                padding-top: 80px;
-                /* 文字底部对齐 */
-                align-items: flex-end;
-                padding-bottom: 10vh; /* 文字离底部距离 */
+                /* 文字顶部对齐，添加上内边距避开导航栏 */
+                align-items: flex-start;
+                padding-top: 80px;      /* 导航栏高度约80px */
+                padding-bottom: 10vh;   /* 底部留白，保持视觉舒适 */
             }
             
             .hero video {
-                /* 视频顶部对齐，让主要内容上移 */
-                object-position: top;
+                /* 视频底部对齐，让主要内容下移，避免被导航栏遮挡 */
+                object-position: bottom;
             }
             
             .hero h1 {
