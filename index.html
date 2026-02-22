@@ -27,26 +27,21 @@
             color: var(--light);
             line-height: 1.6;
             overflow-x: hidden;
-            /* 全局添加顶部间距，防止fixed导航栏遮挡页面顶部内容 */
-            padding-top: 0;
         }
         
-        /* 导航栏样式 */
+        /* 导航栏样式 - 改为相对定位，不再悬浮遮挡 */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 1.5rem 5%;
-            position: fixed;
+            /* 从 fixed 改为 relative */
+            position: relative;
             width: 100%;
             top: 0;
-            z-index: 1000;
             background-color: rgba(18, 18, 18, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            /* 明确导航栏高度相关，方便计算间距 */
-            height: auto;
-            min-height: 80px;
         }
         
         .logo {
@@ -125,9 +120,6 @@
             justify-content: center;
             overflow: hidden;
             background-color: var(--dark);
-            /* 电脑端默认padding-top，确保不被导航栏遮挡 */
-            padding-top: 80px;
-            box-sizing: border-box;
         }
         
         /* 背景视频 - 完整显示 */
@@ -161,8 +153,6 @@
             max-width: 1200px;
             padding: 0 20px;
             text-align: center;
-            /* 基础间距，避免紧贴视频顶部 */
-            margin-top: 20px;
         }
         
         /* 标题样式 - 强制换行 */
@@ -316,43 +306,25 @@
                 display: none;
             }
             
-            /* 关键修改1：调整hero区域布局，让文字在导航栏下方显示 */
             .hero {
-                /* 手机端改为flex-end对齐，让文字靠下，完全避开导航栏 */
-                align-items: flex-end;
-                /* 增加底部内边距，确保文字不贴屏幕底部 */
-                padding-bottom: 20vh;
-                /* 保留顶部padding，确保导航栏不遮挡视频顶部 */
-                padding-top: 0;
+                /* 文字顶部对齐，不再需要padding-top（导航栏不再悬浮） */
+                align-items: flex-start;
+                padding-bottom: 10vh;   /* 底部留白，保持视觉舒适 */
             }
             
-            /* 关键修改2：优化手机端文字容器位置 */
-            .hero-content {
-                position: relative;
-                /* 重置margin-top，避免多余间距 */
-                margin-top: 0;
-                /* 增加左右内边距，适配手机屏幕 */
-                padding: 0 15px;
+            .hero video {
+                /* 视频底部对齐，让主要内容下移 */
+                object-position: bottom;
             }
             
             .hero h1 {
                 font-size: 2.5rem;
                 margin-bottom: 1rem;
-                /* 手机端标题行高调整，提升可读性 */
-                line-height: 1.4;
             }
             
             .hero p {
                 font-size: 1.1rem;
                 margin-bottom: 2rem;
-                /* 缩小手机端描述文字宽度，提升阅读体验 */
-                max-width: 90%;
-            }
-            
-            /* 调整按钮大小，适配手机屏幕 */
-            .cta-button {
-                padding: 0.8rem 2rem;
-                font-size: 1rem;
             }
             
             .section-title {
@@ -376,7 +348,7 @@
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
+    <!-- 导航栏 - 现在位于正常文档流，不再悬浮 -->
     <nav>
         <div class="logo">
             丰正科技
@@ -473,9 +445,8 @@
                 
                 const targetElement = document.querySelector(targetId);
                 if(targetElement) {
-                    // 调整锚点滚动位置，避开导航栏
                     window.scrollTo({
-                        top: targetElement.offsetTop - 90,
+                        top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
                     });
                 }
