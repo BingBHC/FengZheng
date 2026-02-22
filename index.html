@@ -35,7 +35,6 @@
             justify-content: space-between;
             align-items: center;
             padding: 1.5rem 5%;
-            /* 从 fixed 改为 relative */
             position: relative;
             width: 100%;
             top: 0;
@@ -114,7 +113,7 @@
         /* 英雄区域样式 - 视频背景 */
         .hero {
             position: relative;
-            height: 80vh;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -130,11 +129,11 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            object-position: center; /* 默认居中 */
+            object-position: center;
             z-index: 0;
         }
         
-        /* 半透明遮罩层 - 调整为几乎透明 (0.05) 让视频更清晰 */
+        /* 半透明遮罩层 - 几乎透明 (0.05) */
         .hero .overlay {
             position: absolute;
             top: 0;
@@ -307,14 +306,15 @@
             }
             
             .hero {
-                /* 文字顶部对齐，不再需要padding-top（导航栏不再悬浮） */
+                /* 文字顶部对齐，导航栏已相对定位，无需额外留白 */
                 align-items: flex-start;
-                padding-bottom: 10vh;   /* 底部留白，保持视觉舒适 */
+                /* 减少底部留白，让内容更靠上 */
+                padding-bottom: 5vh;
             }
             
             .hero video {
-                /* 视频底部对齐，让主要内容下移 */
-                object-position: bottom;
+                /* 视频改为居中，让主要内容显示在屏幕中央，用户一打开就能看见 */
+                object-position: center;
             }
             
             .hero h1 {
